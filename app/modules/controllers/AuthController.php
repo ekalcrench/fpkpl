@@ -7,19 +7,12 @@ use App\Ekuivalensi\Application\GetUsers;
 
 class AuthController extends Controller
 {
-
-    public function indexAction()
-    {
-
-    }
-
     public function loginAction()
     {
         $this->auth = $this->session->get("auth");
         if($this->auth)
         {
-            header("location:../index/home");
-            exit();
+            $this->response->redirect('index/home');
         }
         $this->view->title = "Login";
         if ($this->request->isPost()) {
@@ -60,5 +53,4 @@ class AuthController extends Controller
       $this->session->destroy();
       $this->response->redirect('/');
     }
-
 }

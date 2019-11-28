@@ -15,8 +15,7 @@ class MahasiswaController extends Controller
         }
         else
         {
-            header("location:auth/login");
-            exit();
+            $this->response->redirect('auth/login');
         }
     }
 
@@ -24,5 +23,4 @@ class MahasiswaController extends Controller
     {
         $this->view->title = "Mahasiswa Merdeka";
     }
-
 }

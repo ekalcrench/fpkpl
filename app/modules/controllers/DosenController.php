@@ -15,8 +15,7 @@ class DosenController extends Controller
         }
         else
         {
-            header("location:auth/login");
-            exit();
+            $this->response->redirect('auth/login');
         }
     }
 
@@ -24,5 +23,4 @@ class DosenController extends Controller
     {
         $this->view->title = "Dosen Dashboard";
     }
-
 }

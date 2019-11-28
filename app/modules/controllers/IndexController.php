@@ -18,8 +18,7 @@ class IndexController extends Controller
         $this->view->title = "Welcome";
         if($this->auth)
         {
-            header("location:index/home");
-            exit();
+            $this->response->redirect('index/home');
         }
     }
 
@@ -32,8 +31,7 @@ class IndexController extends Controller
         }
         else
         {
-            header("location:../auth/login");
-            exit();
+            $this->response->redirect('index/home');
         }
     }
 

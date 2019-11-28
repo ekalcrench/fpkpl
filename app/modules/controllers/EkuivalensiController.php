@@ -16,6 +16,15 @@ class EkuivalensiController extends Controller
 
     public function relasiAction()
     {  
+        $this->auth = $this->session->get("auth");
+        if($this->auth['table'] == "Dosen")
+        {
+            $this->view->auth = $this->auth;
+        }
+        else
+        {
+            $this->response->redirect('index/home');
+        }
         $matakuliah = new GetMatakuliahs();
         $this->view->matakuliahLama = $matakuliah->matakuliahLama;
         $this->view->matakuliahBaru = $matakuliah->matakuliahBaru;
