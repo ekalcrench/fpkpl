@@ -4,6 +4,7 @@ namespace App\Ekuivalensi\Controller;
 
 use Phalcon\Mvc\Controller;
 use App\Ekuivalensi\Application\GetMatakuliahs;
+use App\Ekuivalensi\Application\HttpFiles;
 
 class KaprodiController extends Controller
 {
@@ -35,12 +36,39 @@ class KaprodiController extends Controller
 
     public function unduhAction()
     {
-
+        if ($this->request->isPost()) 
+        {
+            $filename = $this->request->getPost('filename');
+            $file = new HttpFiles();
+            $file->download($filename);
+            die();
+        }
+        else
+        {
+           return "SORRY THE PAGE DOES NOT EXIST";
+        }
     }
 
     public function unggahAction()
     {
-        
+        if ($this->request->isPost()) 
+        {
+            if ($this->request->hasFiles()) 
+            {
+                $file = new HttpFiles();
+                $file->upload($this->request->getUploadedFiles());
+                $this->flashSession->success('File Berhasil Diunggah');
+                $this->response->redirect('kaprodi/matakuliah');
+            }
+            else
+            {
+                $this->flashSession->error('Pilih File Terlebih Dahulu');
+                $this->response->redirect('kaprodi/matakuliah');
+            }
+        }
+        else
+        {
+            return "SORRY THE PAGE DOES NOT EXIST";
+        }
     }
 }
-

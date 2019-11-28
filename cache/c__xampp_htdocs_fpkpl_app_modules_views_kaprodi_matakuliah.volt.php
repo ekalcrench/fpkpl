@@ -11,6 +11,7 @@
     <body>
         <div class="container">
             
+<?= $this->flashSession->output() ?>
 <br><br>
 <h2 class="text-center">Daftar Matakuliah</h2>
 <br><br>
@@ -48,10 +49,24 @@
 <br><br>
 <div class="row">
     <div class="col-lg-6">
-        <a href='<?= $this->url->get('kaprodi/unduh') ?>'><button class="btn btn-success btn-block">Unduh Template Matakuliah</button></a>
+        <?= $this->tag->form(['kaprodi/unduh', 'role' => 'form', 'class' => 'form-horizontal']) ?>
+        <div class="form-group">
+            <div class="col-sm-12">
+                <input type="hidden" value="Template.xlsx" name="filename">
+                <button type="submit" class="btn btn-success btn-block">Unduh Template Matakuliah</button>
+            </div>
+        </div>
+        </form>
     </div>
     <div class="col-lg-6">
-        <a href='<?= $this->url->get('kaprodi/unggah') ?>'><button class="btn btn-success btn-block">Unggah Matakuliah Kurikulum Baru</button></a>
+        <form action='<?= $this->url->get('kaprodi/unggah') ?>' method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <div class="col-sm-12">
+                <input type="file" name="file">
+                <button type="submit" class="btn btn-success btn-block">Unggah Matakuliah Kurikulum Baru</button>
+            </div>
+        </div>
+        </form>
     </div>
 </div>
 <br><br>
