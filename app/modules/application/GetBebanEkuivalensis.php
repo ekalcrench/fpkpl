@@ -9,12 +9,14 @@ class GetBebanEkuivalensis
     public $bebanEkuiv = array();
 
     public function __construct()
-    {
-        // Dikarenakan model relationship hanya dapat digunakan dengan method findFirst, maka kita hitung jumlah data
-        $jumlah = count(Beban_ekuivalensis::find());
-        for ($x = 1; $x <= $jumlah; $x++) {
-            // Setiap data row dimasukan kedalam array bebanEkuiv
-            $this->bebanEkuiv[$x] = Beban_ekuivalensis::findFirst($x);
-        } 
+    {        
+        // Dikarenakan kita tidak mengatahui id yang ada di database maka cari sendiri
+        $bebanAll = Beban_ekuivalensis::find();
+        $x = 0;
+        foreach($bebanAll as $beban)
+        {
+            $this->bebanEkuiv[$x] = Beban_ekuivalensis::findFirst($beban->id);
+            $x = $x + 1;
+        }
     }
 }

@@ -28,7 +28,7 @@
         <tr>
             <td><?= $mahasiswa->mahasiswas->nrp ?></td>
             <td><?= $mahasiswa->mahasiswas->nama ?></td>
-            <td>Delete</td>
+            <td><a href="deleteBeban/<?= $mahasiswa->id ?>"><button class="btn btn-danger">Delete</button></a></td>
         </tr>
         <?php } ?>
     </tbody>
@@ -40,7 +40,8 @@
             <label for="mahasiswa">Mahasiswa</label>
             <select class="form-control" name="mahasiswa">
                 <?php foreach ($mahasiswas as $mahasiswa) { ?>
-                    <option value="<?= $lama->id ?>">
+                    <option value="<?= $mahasiswa->id ?>">
+                        <?= $mahasiswa->nrp ?>
                         <?= $mahasiswa->nama ?>
                     </option>
                 <?php } ?>

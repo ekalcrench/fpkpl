@@ -34,6 +34,4 @@ class IndexController extends Controller
             $this->response->redirect('index/home');
         }
     }
-
 }
-

@@ -13,7 +13,7 @@
             
 <?= $this->flashSession->output() ?>
 <br><br>
-<?= $this->tag->form(['ekuivalensi/create', 'role' => 'form', 'class' => 'form-horizontal']) ?>
+<?= $this->tag->form(['ekuivalensi/createRelasi', 'role' => 'form', 'class' => 'form-horizontal']) ?>
     <div class="form-group">
         <label class="control-label col-sm-2" for="matkulLama">Matakuliah Lama:</label>
         <div class="col-sm-10">

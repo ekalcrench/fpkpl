@@ -7,8 +7,7 @@ use App\Ekuivalensi\Application\GetMatakuliahs;
 use App\Ekuivalensi\Application\GetMahasiswas;
 use App\Ekuivalensi\Application\GetBebanEkuivalensis;
 use App\Ekuivalensi\Application\RelasiMatakuliah;
-use App\Ekuivalensi\Model\Ekuivalensis;
-use App\Ekuivalensi\Model\Beban_ekuivalensis;
+use App\Ekuivalensi\Application\BebanEkuivalensi;
 
 class EkuivalensiController extends Controller
 {
@@ -47,17 +46,19 @@ class EkuivalensiController extends Controller
             $ekuivalensi = new RelasiMatakuliah($idMatkulLama, $relasi, $idMatkulBaru);
             if($ekuivalensi->checkRelasi())
             {
-                if($ekuivalensi->createRelasi(new Ekuivalensis()))
-                {
-                    $this->flashSession->success('Data Berhasil DImasukan');
-                    $this->response->redirect('ekuivalensi/relasi');
-                }
+                $ekuivalensi->createRelasi();
+                $this->flashSession->success('Data Berhasil DImasukan');
+                $this->response->redirect('ekuivalensi/relasi');
             }
             else
             {
                 $this->flashSession->error('Data Sudah Ada');
                 $this->response->redirect('ekuivalensi/relasi');
             }
+        }
+        else
+        {
+            return "SORRY THE PAGE DOES NOT EXIST";
         }
     }
 
@@ -73,10 +74,44 @@ class EkuivalensiController extends Controller
         {
             $this->response->redirect('index/home');
         }
-        $this->view->title = "Beban Ekuivalensi";
+        $this->view->title = "Beban Ekuivalensi";        
         $mahasiswas = new GetMahasiswas();
         $mahasiswaBeban = new GetBebanEkuivalensis();
         $this->view->mahasiswas = $mahasiswas->mahasiswa;
         $this->view->mahasiswaBeban = $mahasiswaBeban->bebanEkuiv;
+    }
+
+    // Untuk create mahasiswa beban 
+    public function createBebanAction()
+    {
+        if ($this->request->isPost()) 
+        {
+            $id_mahasiswa = $this->request->getPost('mahasiswa');
+            $bebanEkuiv = new BebanEkuivalensi();
+            if($bebanEkuiv->checkBeban($id_mahasiswa))
+            {
+                $bebanEkuiv->createBeban($id_mahasiswa);
+                $this->flashSession->success('Data Berhasil DImasukan');
+                $this->response->redirect('ekuivalensi/beban');
+            }
+            else
+            {
+                $this->flashSession->error('Data Sudah Ada');
+                $this->response->redirect('ekuivalensi/beban');
+            }
+        }
+        else
+        {
+            return "SORRY THE PAGE DOES NOT EXIST";
+        }
+    }
+
+    // Menghapus beban ekuivalensi
+    public function deleteBebanAction($id_beban)
+    {
+        $bebanEkuiv = new BebanEkuivalensi();
+        $bebanEkuiv->deleteBeban($id_beban);
+        $this->flashSession->success('Data Berhasil Dihapus');
+        $this->response->redirect('ekuivalensi/beban');
     }
 }

@@ -17,7 +17,7 @@
         <tr>
             <td>{{ mahasiswa.mahasiswas.nrp }}</td>
             <td>{{ mahasiswa.mahasiswas.nama }}</td>
-            <td>Delete</td>
+            <td><a href="deleteBeban/{{mahasiswa.id}}"><button class="btn btn-danger">Delete</button></a></td>
         </tr>
         {% endfor %}
     </tbody>
@@ -29,7 +29,8 @@
             <label for="mahasiswa">Mahasiswa</label>
             <select class="form-control" name="mahasiswa">
                 {% for mahasiswa in mahasiswas %}
-                    <option value="{{lama.id}}">
+                    <option value="{{mahasiswa.id}}">
+                        {{ mahasiswa.nrp }}
                         {{ mahasiswa.nama }}
                     </option>
                 {% endfor %}
