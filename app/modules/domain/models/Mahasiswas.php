@@ -17,6 +17,15 @@ class Mahasiswas extends Model
     {
         $this->setSchema("fpkpl");
         $this->setSource("mahasiswa");
+        $this->hasOne(
+            'id',
+            'App\Ekuivalensi\Model\Beban_ekuivalensis',
+            'id_mahasiswa',
+            [
+                'alias' => 'beban_ekuivalensis',
+                'reusable' => true
+            ]
+        );
     }
 
     public function getSource()

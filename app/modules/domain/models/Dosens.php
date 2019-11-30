@@ -22,5 +22,4 @@ class Dosens extends Model
     {
         return 'dosen';
     }
-
 }

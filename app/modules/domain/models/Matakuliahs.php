@@ -24,5 +24,4 @@ class Matakuliahs extends Model
     {
         return 'matakuliah';
     }
-
 }
