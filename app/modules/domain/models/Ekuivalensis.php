@@ -22,5 +22,4 @@ class Ekuivalensis extends Model
     {
         return 'ekuivalensi';
     }
-
 }

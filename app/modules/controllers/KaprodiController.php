@@ -53,10 +53,9 @@ class KaprodiController extends Controller
     {
         if ($this->request->isPost()) 
         {
-            if ($this->request->hasFiles()) 
+            $file = new HttpFiles();
+            if($file->upload($this->request->getUploadedFiles()))
             {
-                $file = new HttpFiles();
-                $file->upload($this->request->getUploadedFiles());
                 $this->flashSession->success('File Berhasil Diunggah');
                 $this->response->redirect('kaprodi/matakuliah');
             }

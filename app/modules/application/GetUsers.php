@@ -33,5 +33,4 @@ class GetUsers
             $this->user = $this->mahasiswa->findFirst("nrp='$this->username'");
         }
     }
-
 }
