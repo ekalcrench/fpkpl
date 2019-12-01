@@ -28,34 +28,46 @@
         <tr>
             <td><?= $mahasiswa->mahasiswas->nrp ?></td>
             <td><?= $mahasiswa->mahasiswas->nama ?></td>
-            <td><a href="deleteBeban/<?= $mahasiswa->id ?>"><button class="btn btn-danger">Delete</button></a></td>
+            <?php if ($auth['table'] == 'Dosen') { ?>
+                <td><a href="deleteBeban/<?= $mahasiswa->id ?>"><button class="btn btn-danger">Delete</button> </a><a href="prosesBeban/<?= $mahasiswa->id ?>"><button class="btn btn-success">Proses</button></a></td>
+            <?php } ?>
+            <?php if ($auth['table'] == 'Kaprodi') { ?>
+                <td><a href="prosesBeban/<?= $mahasiswa->id ?>"><button class="btn btn-success">Proses</button></a></td>
+            <?php } ?>
         </tr>
         <?php } ?>
     </tbody>
 </table>
-<br><br>
-<?= $this->tag->form(['ekuivalensi/createBeban', 'role' => 'form', 'class' => 'form-horizontal']) ?>
-    <div class="form-group">
-        <div class="col-sm-12">
-            <label for="mahasiswa">Mahasiswa</label>
-            <select class="form-control" name="mahasiswa">
-                <?php foreach ($mahasiswas as $mahasiswa) { ?>
-                    <option value="<?= $mahasiswa->id ?>">
-                        <?= $mahasiswa->nrp ?>
-                        <?= $mahasiswa->nama ?>
-                    </option>
-                <?php } ?>
-            </select>
+<?php if ($auth['table'] == 'Dosen') { ?>
+    <br><br>
+    <?= $this->tag->form(['ekuivalensi/createBeban', 'role' => 'form', 'class' => 'form-horizontal']) ?>
+        <div class="form-group">
+            <div class="col-sm-12">
+                <label for="mahasiswa">Mahasiswa</label>
+                <select class="form-control" name="mahasiswa">
+                    <?php foreach ($mahasiswas as $mahasiswa) { ?>
+                        <option value="<?= $mahasiswa->id ?>">
+                            <?= $mahasiswa->nrp ?>
+                            <?= $mahasiswa->nama ?>
+                        </option>
+                    <?php } ?>
+                </select>
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        <div class="col-sm-12">
-            <button type="submit" class="btn btn-success btn-block">Tambah Proses Beban Ekuivalensi</button>
+        <div class="form-group">
+            <div class="col-sm-12">
+                <button type="submit" class="btn btn-success btn-block">Tambah Proses Beban Ekuivalensi</button>
+            </div>
         </div>
-    </div>
-</form>
+    </form>
+<?php } ?>
 <br><br>
-<a href="/dosen"><button class="btn btn-default btn-block">Back</button></a>
+<?php if ($auth['table'] == 'Dosen') { ?>
+    <a href="/dosen"><button class="btn btn-danger btn-block">Back</button></a>
+<?php } ?>
+<?php if ($auth['table'] == 'Kaprodi') { ?>
+    <a href="/kaprodi"><button class="btn btn-danger btn-block">Back</button></a>
+<?php } ?>
 
 
         </div>

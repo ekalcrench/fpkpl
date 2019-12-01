@@ -10,7 +10,6 @@ class Matakuliah_ambils extends Model
     public $id;
     public $id_matakuliah;
     public $id_mahasiswa;
-    public $id_ekuivalensi;
 
     public function initialize()
     {
@@ -22,5 +21,4 @@ class Matakuliah_ambils extends Model
     {
         return 'matakuliah_ambil';
     }
-
 }

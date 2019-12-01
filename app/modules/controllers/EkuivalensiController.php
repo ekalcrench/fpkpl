@@ -66,7 +66,7 @@ class EkuivalensiController extends Controller
     public function bebanAction()
     {
         $this->auth = $this->session->get("auth");
-        if($this->auth['table'] == "Dosen")
+        if($this->auth['table'] == "Dosen" or $this->auth['table'] == "Kaprodi")
         {
             $this->view->auth = $this->auth;
         }
@@ -106,12 +106,27 @@ class EkuivalensiController extends Controller
         }
     }
 
-    // Menghapus beban ekuivalensi
+    // Menghapus beban ekuivalensi (Hak akses hanya dosen, berdasarkan UseCase)
     public function deleteBebanAction($id_beban)
     {
+        $this->auth = $this->session->get("auth");
+        if($this->auth['table'] == "Dosen")
+        {
+            $this->view->auth = $this->auth;
+        }
+        else
+        {
+            $this->response->redirect('index/home');
+        }
         $bebanEkuiv = new BebanEkuivalensi();
         $bebanEkuiv->deleteBeban($id_beban);
         $this->flashSession->success('Data Berhasil Dihapus');
         $this->response->redirect('ekuivalensi/beban');
+    }
+
+    // Memproses mahasiswa yang terkena ekuivalensi
+    public function prosesBebanAction($id_beban)
+    {
+
     }
 }
