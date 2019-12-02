@@ -6,15 +6,41 @@ use Phalcon\Mvc\Controller;
 use App\Ekuivalensi\Application\GetMatakuliahs;
 use App\Ekuivalensi\Application\GetMahasiswas;
 use App\Ekuivalensi\Application\GetBebanEkuivalensis;
+use App\Ekuivalensi\Application\GetMatakuliahAmbils;
 use App\Ekuivalensi\Application\RelasiMatakuliah;
 use App\Ekuivalensi\Application\BebanEkuivalensi;
+use App\Ekuivalensi\Application\ProsesEkuivalensi;
 
 class EkuivalensiController extends Controller
 {
     public function indexAction()
     {
+        $this->auth = $this->session->get("auth");
+        if($this->auth['table'] == "Mahasiswa")
+        {
+            $this->view->auth = $this->auth;
+        }
+        else
+        {
+            $this->response->redirect('index/home');
+        }
         $this->view->title = "Ekuivalensi";
+        $matakuliah = new GetMatakuliahAmbils($this->auth['id']);
+        $this->view->matkulAmbil = $matakuliah->matkulAmbil;
+        $bla = new ProsesEkuivalensi();
+        $bla->getProses($this->auth['id']);
+        $this->view->allproses = $bla->proses;
+
     }
+
+    public function statusAction($id_matkul_ambil, $status)
+    {
+        $proses = new ProsesEkuivalensi();
+        $proses->createProses($id_matkul_ambil,$status);
+        $this->response->redirect("ekuivalensi");
+    }
+
+
 
     // Untuk mengatur relasi matakuliah lama dengan matakuliah baru
     public function relasiAction()

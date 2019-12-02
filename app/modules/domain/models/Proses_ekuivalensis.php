@@ -4,24 +4,22 @@ namespace App\Ekuivalensi\Model;
 
 use Phalcon\Mvc\Model;
 
-class Matakuliahs extends Model
+class Proses_ekuivalensis extends Model
 {
 
     public $id;
-    public $kode;
-    public $nama;
-    public $sks;
-    public $semester;
-    public $kurikulum;
+    public $id_matkul_ambil;
+    public $status;
+    public $permanen;
 
     public function initialize()
     {
         $this->setSchema("fpkpl");
-        $this->setSource("matakuliah");
-        $this->hasMany(
-            'id',
+        $this->setSource("proses_ekuivalensi");
+        $this->belongsTo(
+            'id_matkul_ambil',
             'App\Ekuivalensi\Model\Matakuliah_ambils',
-            'id_matakuliah',
+            'id',
             [
                 'alias' => 'matakuliah_ambils',
                 'reusable' => true
@@ -31,6 +29,6 @@ class Matakuliahs extends Model
 
     public function getSource()
     {
-        return 'matakuliah';
+        return 'proses_ekuivalensi';
     }
 }

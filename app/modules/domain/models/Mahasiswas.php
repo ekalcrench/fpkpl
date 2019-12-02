@@ -26,6 +26,15 @@ class Mahasiswas extends Model
                 'reusable' => true
             ]
         );
+        $this->hasMany(
+            'id',
+            'App\Ekuivalensi\Model\Matakuliah_ambils',
+            'id_mahasiswa',
+            [
+                'alias' => 'matakuliah_ambils',
+                'reusable' => true
+            ]
+        );
     }
 
     public function getSource()
