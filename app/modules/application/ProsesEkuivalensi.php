@@ -3,19 +3,20 @@
 namespace App\Ekuivalensi\Application;
 
 use App\Ekuivalensi\Model\Proses_ekuivalensis;
-use App\Ekuivalensi\Model\Matakuliah_ambils;
- 
 
 class ProsesEkuivalensi
 {
-    // public $id_matkul_ambil = array();
-    // public $status = array();
     public $proses = array();
+
     public function createProses($id_matkul_ambil, $status){
         $proses_update = Proses_ekuivalensis::findFirst("id_matkul_ambil = '$id_matkul_ambil'");
         if($proses_update){
-            $proses_update->status = $status;
-            $proses_update->save();
+            if($proses_update->permanen == "NO")
+            {
+                $proses_update->status = $status;
+                $proses_update->save();
+            }
+            else return 0;
         }
         else{
             $proses = new Proses_ekuivalensis();
@@ -25,8 +26,6 @@ class ProsesEkuivalensi
 
             $proses->create();
         }
-        
-
     }
 
     public function getProses($id_mahasiswa){
@@ -40,6 +39,12 @@ class ProsesEkuivalensi
                 $x = $x + 1;
             }
         }
+    }
 
+    public function updatePermanen($id, $permanen)
+    {
+        $permanenUpdate = Proses_ekuivalensis::findFirst($id);
+        $permanenUpdate->permanen = $permanen;
+        $permanenUpdate->save();
     }
 }

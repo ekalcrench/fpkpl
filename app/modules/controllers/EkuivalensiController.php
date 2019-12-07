@@ -13,6 +13,7 @@ use App\Ekuivalensi\Application\ProsesEkuivalensi;
 
 class EkuivalensiController extends Controller
 {
+    // Untuk mahasiswa
     public function indexAction()
     {
         $this->auth = $this->session->get("auth");
@@ -27,20 +28,26 @@ class EkuivalensiController extends Controller
         $this->view->title = "Ekuivalensi";
         $matakuliah = new GetMatakuliahAmbils($this->auth['id']);
         $this->view->matkulAmbil = $matakuliah->matkulAmbil;
-        $bla = new ProsesEkuivalensi();
-        $bla->getProses($this->auth['id']);
-        $this->view->allproses = $bla->proses;
+        $prosesEkuiv = new ProsesEkuivalensi();
+        $prosesEkuiv->getProses($this->auth['id']);
+        $this->view->allproses = $prosesEkuiv->proses;
 
     }
 
+    // Untuk mahasiswa jika ingin mengganti status dari ambil, hapus, ataupun bebas
     public function statusAction($id_matkul_ambil, $status)
     {
         $proses = new ProsesEkuivalensi();
-        $proses->createProses($id_matkul_ambil,$status);
+        if($proses->createProses($id_matkul_ambil, $status))
+        {
+            $this->flashSession->success("Data Berhasil Dibuat");
+        }
+        else
+        {
+            $this->flashSession->error("Data Sudah Dipermanen");
+        }
         $this->response->redirect("ekuivalensi");
     }
-
-
 
     // Untuk mengatur relasi matakuliah lama dengan matakuliah baru
     public function relasiAction()
@@ -151,8 +158,20 @@ class EkuivalensiController extends Controller
     }
 
     // Memproses mahasiswa yang terkena ekuivalensi
-    public function prosesBebanAction($id_beban)
+    public function prosesBebanAction($id_mahasiswa)
     {
+        $prosesEkuiv = new ProsesEkuivalensi();
+        $prosesEkuiv->getProses($id_mahasiswa);
+        $this->view->allproses = $prosesEkuiv->proses;
+        $this->view->id_mahasiswa = $id_mahasiswa;
+        $this->view->title = "Persetujuan Mahasiswa";
+    }
 
+    // Mengganti nilai permanen pada proses ekuivalensi
+    public function permanenAction($id_mahasiswa, $id, $permanen)
+    {
+        $proses = new ProsesEkuivalensi();
+        $proses->updatePermanen($id, $permanen);
+        $this->response->redirect("ekuivalensi/prosesBeban/$id_mahasiswa");
     }
 }

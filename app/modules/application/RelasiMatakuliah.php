@@ -19,17 +19,57 @@ class RelasiMatakuliah
 
     public function checkRelasi()
     {
-        $ekuivalensi = Ekuivalensis::find("matakuliah_lama='$this->idMatkulLama'");
-        if(count($ekuivalensi))
+        $ekuiLama = Ekuivalensis::find("matakuliah_lama='$this->idMatkulLama'");
+        $ekuiBaru = Ekuivalensis::find("matakuliah_baru='$this->idMatkulBaru'");
+        // Hubungan antara ekuiLama dengan ekuiBaru yaitu 2:1 atau 1:2
+        if(count($ekuiLama) == 1)
         {
-            foreach($ekuivalensi as $ekui)
+            foreach($ekuiLama as $ekui)
             {
                 if($ekui->relasi == "AND") return 0;
-                elseif($ekui->matakuliah_lama == $this->idMatkulLama && $ekui->matakuliah_baru == $this->idMatkulBaru) return 0;
             }
-            return 1;
         }
-        else return 1;
+        if(count($ekuiBaru) == 1)
+        {
+            foreach($ekuiBaru as $ekui)
+            {
+                if($ekui->relasi == "AND") return 0;
+            }
+        }
+        if(count($ekuiLama) == 0)
+        {
+            // Kalo dua-duanya null ya masuk
+            if(count($ekuiBaru) == 0) return 1;
+            // Kalo matkul baru nya ada, cek dulu matkul lama yang berhubungan dengan matkul baru tersebut
+            else if(count($ekuiBaru) == 1)
+            {
+                foreach($ekuiBaru as $ekui)
+                {
+                    $cekLama = Ekuivalensis::find("matakuliah_lama='$ekui->matakuliah_lama'");
+                    if(count($cekLama) <= 1) return 1;
+                    else return 0;
+                }
+            }
+            // Kalo matkul baru nya ada 2 ya sekip
+            else return 0;
+        }
+        if(count($ekuiBaru) == 0)
+        {
+            // Kalo dua-duanya null ya masuk
+            if(count($ekuiLama) == 0) return 1;
+            // Kalo matkul baru nya ada, cek dulu matkul lama yang berhubungan dengan matkul baru tersebut
+            else if(count($ekuiLama) == 1)
+            {
+                foreach($ekuiLama as $ekui)
+                {
+                    $cekBaru = Ekuivalensis::find("matakuliah_baru='$ekui->matakuliah_baru'");
+                    if(count($cekBaru) <= 1) return 1;
+                    else return 0;
+                }
+            }
+            // Kalo matkul baru nya ada 2 ya sekip
+            else return 0;
+        }
     }
 
     public function createRelasi()

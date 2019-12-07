@@ -13,9 +13,7 @@
             
 
 <br><br>
-<a href='<?= $this->url->get('ekuivalensi/relasi') ?>'><button class="btn btn-default btn-block">Relasi Matakuliah</button></a>
-<br>
-<a href='<?= $this->url->get('ekuivalensi/beban') ?>'><button class="btn btn-default btn-block">Beban Ekuivalensi</button></a>
+<a href='<?= $this->url->get('ekuivalensi') ?>'><button class="btn btn-default btn-block">Ekuivalensi</button></a>
 <br>
 <a href='<?= $this->url->get('index/home') ?>'><button class="btn btn-danger btn-block">Back</button></a>
 

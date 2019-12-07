@@ -1,5 +1,6 @@
 {% extends 'layouts/default.volt' %}
 {% block content %}
+{{ flashSession.output() }}
 <br><br>
 <h2 class="text-center">List Ekuivalensi Mahasiswa</h2>
 <br>

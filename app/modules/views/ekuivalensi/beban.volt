@@ -18,7 +18,7 @@
             <td>{{ mahasiswa.mahasiswas.nrp }}</td>
             <td>{{ mahasiswa.mahasiswas.nama }}</td>
             {% if auth['table'] == "Dosen" %}
-                <td><a href="deleteBeban/{{mahasiswa.id}}"><button class="btn btn-danger">Delete</button> </a><a href="prosesBeban/{{mahasiswa.id}}"><button class="btn btn-success">Proses</button></a></td>
+                <td><a href="deleteBeban/{{mahasiswa.id}}"><button class="btn btn-danger">Delete</button> </a><a href="prosesBeban/{{mahasiswa.id_mahasiswa}}"><button class="btn btn-success">Proses</button></a></td>
             {% endif %}
             {% if auth['table'] == "Kaprodi" %}
                 <td><a href="prosesBeban/{{mahasiswa.id}}"><button class="btn btn-success">Proses</button></a></td>

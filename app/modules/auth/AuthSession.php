@@ -5,7 +5,6 @@ namespace App\Ekuivalensi\Auth;
 use App\Ekuivalensi\Model\Mahasiswas;
 use App\Ekuivalensi\Model\Dosens;
 use App\Ekuivalensi\Model\Kaprodis;
-use Phalcon\Di;
 use Phalcon\DiInterface;
 
 class AuthSession
